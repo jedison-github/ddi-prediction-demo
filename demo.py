@@ -54,15 +54,22 @@ if __name__ == "__main__":
 
     #--------------------------------------------------------------------------------------------------------------------#
     # Predict random data from test set
+    with open(os.path.join('data', 'test_orig_sent.txt'), 'r', encoding='utf-8') as f:
+        orig_sent_lst = []
+        for line in f:
+            orig_sent_lst.append(line.rstrip())
+
     rel_class = ['false', 'advise', 'mechanism', 'effect', 'int']
     num_test_data = len(te_y)
     random_idx = random.choice(range(num_test_data))
     # Print info
-    print("----------------------------------------")
+    print("\n\n----------------------------------------------------------------")
     print("Random idx:", random_idx)
-    print("Sentences:", ' '.join(te_sentences[random_idx]))
+    print("Original Sentence:", orig_sent_lst[random_idx])
+    # print("Drug replaced Sentence:", ' '.join(te_sentences[random_idx]))
     print("Drug 1:", te_drug1_lst[random_idx])
     print("Drug 2:", te_drug2_lst[random_idx])
+    print()
     print("True Relation:", rel_class[np.argmax(te_y[random_idx]).item()])
     # prediction
     pred_te = loaded_model.predict(x=[te_sent_left[[random_idx], :], te_sent_mid[[random_idx], :], te_sent_right[[random_idx], :], te_d1_left[[random_idx], :], te_d1_mid[[random_idx], :], te_d1_right[[random_idx], :],
